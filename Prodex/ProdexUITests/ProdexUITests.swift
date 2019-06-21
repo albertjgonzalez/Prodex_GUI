@@ -1,6 +1,6 @@
 //
-//  Prod__ExUITests.swift
-//  Prod. ExUITests
+//  ProdexUITests.swift
+//  ProdexUITests
 //
 //  Created by Albert Jeremy Gonzalez on 6/21/19.
 //  Copyright © 2019 Albert Jeremy Gonzalez. All rights reserved.
@@ -8,7 +8,7 @@
 
 import XCTest
 
-class Prod__ExUITests: XCTestCase {
+class ProdexUITests: XCTestCase {
 
     override func setUp() {
         // Put setup code here. This method is called before the invocation of each test method in the class.
