@@ -1,11 +1,11 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import UploadScreen from './components/UploadScreen';
 
 function App() {
   return (
     <div id="App">
-      
+      <UploadScreen />
     </div>
   );
 }
