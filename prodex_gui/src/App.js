@@ -2,21 +2,17 @@ import React from 'react';
 import firebase from 'firebase';
 import ReactDOM from 'react-dom';
 import './App.css';
+import { Auth } from './components/Auth'
 import UploadScreen from './components/UploadScreen';
 import LoginScreen from './components/LoginScreen.js';
 import SignUpScreen from './components/SignUpScreen.js'
 
-var firebaseConfig = {
-  apiKey: "AIzaSyB-_QP7PPOGYvgIvdKGKt9J1FKEi1uYhJM",
-  authDomain: "prodex.firebaseapp.com",
-  databaseURL: "https://prodex.firebaseio.com",
-  projectId: "prodex",
-  storageBucket: "prodex.appspot.com",
-  messagingSenderId: "359096778147",
-  appId: "1:359096778147:web:f26c8b8833b7292f"
-};
-// Initialize Firebase
-firebase.initializeApp(firebaseConfig);
+const firebaseConfig = {
+  apiKey: 'AIzaSyB-_QP7PPOGYvgIvdKGKt9J1FKEi1uYhJM',
+  authDomain: 'prodex.firebaseapp.com'
+}
+
+firebase.initializeApp(firebaseConfig)
 
 class App extends React.Component {
   constructor(props){
@@ -28,27 +24,18 @@ class App extends React.Component {
     password:'emailemail',
     loggedIn:false,
     creatingUser: false,
+    displayName: '',
+    email: '',
+    emailVerified: '',
+    photoURL: '',
+    isAnonymous: '',
+    uid: '',
+    providerData: ''
   }
       
 
   verifyUser(email,password){
-    firebase.auth().createUserWithEmailAndPassword(email, password).catch(function(error) {
-      
-      if(error){
-        var errorCode = error.code;
-        var errorMessage = error.message;
-        console.log(error)
-        alert(errorMessage)
-      }
-      else{
-        
-          this.setState({
-            loggedIn:true
-          })
-        }
-      
-      // ...
-      }.bind(this));
+    console.log(email,password)
   }
 
   createUser(){
@@ -57,11 +44,33 @@ class App extends React.Component {
     })
   }
 
+  componentWillMount() {
+
+    firebase.auth().onAuthStateChanged(function (user) {
+      if (user) {
+        console.log(user)
+        this.setState({
+          loggedIn: true,
+          creatingUser: false,
+          displayName: user.displayName,
+          email: user.email,
+          emailVerified: user.emailVerified,
+          photoURL: user.photoURL,
+          isAnonymous: user.isAnonymous,
+          uid: user.uid,
+          providerData: user.providerData,
+        })
+      } else {
+        // User is signed out.
+        // ...
+      }
+    }.bind(this));
+  }
 
  render(){
   if(this.state.creatingUser){
     return (
-      <SignUpScreen createUser={()=>this.setState({creatingUser:false})}/>
+      <SignUpScreen createUser={(email,password)=>Auth.CreateUser(email,password)}/>
     )
   }
   if(this.state.loggedIn){
@@ -71,7 +80,7 @@ class App extends React.Component {
     
   }
       return (
-        <LoginScreen createUser={()=>this.createUser()} verifyUser={()=>{this.verifyUser(this.state.email,this.state.password)}}/>
+        <LoginScreen createUser={()=>this.createUser()} verifyUser={()=>{this.verifyUser(this.props.email,this.props.password)}}/>
       )
  }
   
