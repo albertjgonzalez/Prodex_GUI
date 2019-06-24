@@ -14,6 +14,25 @@ import firebase from 'firebase';
             
             // ...
             }.bind(this));
+    },
+
+    LogginUser: (email,password) => {
+      firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
+        // Handle Errors here.
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        // ...
+      });
+    },
+
+    LogOut: () => {
+      firebase.auth().signOut().then(function() {
+        // Sign-out successful.
+        
+      }).catch(function(error) {
+        alert(error)
+      });
     }
+
 };
 

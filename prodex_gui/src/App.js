@@ -20,12 +20,11 @@ class App extends React.Component {
   }
 
   state={
-    email:'albert@email.com',
-    password:'emailemail',
+    email:'',
+    password:'',
     loggedIn:false,
     creatingUser: false,
     displayName: '',
-    email: '',
     emailVerified: '',
     photoURL: '',
     isAnonymous: '',
@@ -61,8 +60,18 @@ class App extends React.Component {
           providerData: user.providerData,
         })
       } else {
-        // User is signed out.
-        // ...
+        this.setState({
+          email:'',
+          password:'',
+          loggedIn:false,
+          creatingUser: false,
+          displayName: '',
+          emailVerified: '',
+          photoURL: '',
+          isAnonymous: '',
+          uid: '',
+          providerData: ''
+        })
       }
     }.bind(this));
   }
@@ -75,12 +84,12 @@ class App extends React.Component {
   }
   if(this.state.loggedIn){
       return(
-        <UploadScreen />
+        <UploadScreen logOut={()=>Auth.LogOut()}/>
     )
     
   }
       return (
-        <LoginScreen createUser={()=>this.createUser()} verifyUser={()=>{this.verifyUser(this.props.email,this.props.password)}}/>
+        <LoginScreen createUser={()=>this.createUser()}submitUser={(email,password)=>Auth.LogginUser(email,password)}/>
       )
  }
   
