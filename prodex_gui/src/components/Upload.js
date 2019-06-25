@@ -1,8 +1,8 @@
 
-//import firebase
+import firebase from 'firebase';
 
 const singleBeat = (name,file,location)=>{
-    //send beat(s) and info to firebase
+
     
     return (
         //return success or failue

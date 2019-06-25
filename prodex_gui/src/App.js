@@ -8,8 +8,15 @@ import LoginScreen from './components/LoginScreen.js';
 import SignUpScreen from './components/SignUpScreen.js'
 
 const firebaseConfig = {
-  apiKey: 'AIzaSyB-_QP7PPOGYvgIvdKGKt9J1FKEi1uYhJM',
-  authDomain: 'prodex.firebaseapp.com'
+
+    apiKey: "AIzaSyB-_QP7PPOGYvgIvdKGKt9J1FKEi1uYhJM",
+    authDomain: "prodex.firebaseapp.com",
+    databaseURL: "https://prodex.firebaseio.com",
+    projectId: "prodex",
+    storageBucket: "prodex.appspot.com",
+    messagingSenderId: "359096778147",
+    appId: "1:359096778147:web:f26c8b8833b7292f"
+
 }
 
 firebase.initializeApp(firebaseConfig)
