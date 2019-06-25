@@ -12,7 +12,9 @@ export default class FileUploader extends React.Component{
           file: [],
           isUploading: false,
           progress: 0,
-          fileName:'beat name'
+          modalOpen:false,
+          beatName:'',
+          beatPackName:''
         };
   }
   
@@ -20,9 +22,15 @@ export default class FileUploader extends React.Component{
     
     
   customOnChangeHandler = (event) => {
-    this.startUploadManually(event)
+    this.setState({modalOpen:true})
+    // this.startUploadManually(event)
   }
  
+  updateBeatData = (beatInfo) => {
+    let { beatName,beatPackName } = beatInfo;
+    this.setState({ beatName,beatPackName })
+    console.log(this.state.beatName)
+  }
   
   startUploadManually = (e) => {
     this.setState({ isUploading: true, progress: 0 })
@@ -48,14 +56,19 @@ export default class FileUploader extends React.Component{
       
       return (
         <div>
-          <UploadModal />
+          <UploadModal 
+            updateBeatInfo={this.updateBeatData}
+            modalOpen={this.state.modalOpen}
+            beatName={this.props.beatName}
+            beatPackName={this.props.beatPackName}
+            />
           <form>
             {this.state.isUploading && <p>Progress: {this.state.progress}</p>}
             <FileUpload
               accept="mp3/*"
               onChange={this.customOnChangeHandler}
               ref={instance => { this.fileUploader = instance; } }
-              filename={this.state.fileName }
+              filename={this.state.beatName }
               storageRef={firebase.storage().ref(`${this.props.userName}/${this.props.packName}`)}
               onUploadError={this.handleUploadError}
               onUploadSuccess={this.handleUploadSuccess}
