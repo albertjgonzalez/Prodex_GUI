@@ -4,49 +4,61 @@ import FileUpload from "react-firebase-file-uploader";
 import firebase from 'firebase';
 
 export default class FileUploader extends React.Component{
+  constructor(props){
+    super(props);
+    this.state = {
+          file: [],
+          isUploading: false,
+          progress: 0,
+          fileName:'beat name'
+        };
+  }
+  
+    
+    
+    
+  customOnChangeHandler = (event) => {
+    this.startUploadManually(event)
+  }
+ 
+  
+  startUploadManually = (e) => {
+    this.setState({ isUploading: true, progress: 0 })
+    this.fileUploader.startUpload(e.target.files[0])
 
-    state = {
-        username: "",
-        avatar: "",
-        isUploading: false,
-        progress: 0,
-        avatarURL: ""
-      };
-     
-      handleUploadStart = () => this.setState({ isUploading: true, progress: 0 });
-      handleProgress = progress => this.setState({ progress });
-      handleUploadError = error => {
-        this.setState({ isUploading: false });
-        console.error(error);
-      };
-      handleUploadSuccess = filename => {
-        this.setState({ avatar: filename, progress: 100, isUploading: false });
-        firebase
-          .storage()
-          .ref("images")
-          .child(filename)
-          .getDownloadURL()
-          .then(url => this.setState({ avatarURL: url }));
-      };
-     
-      render() {
-        return (
-          <div>
-            <form>
-              {this.state.isUploading && <p>Progress: {this.state.progress}</p>}
-              {this.state.avatarURL && <img src={this.state.avatarURL} />}
-              <FileUpload
-                accept="docx/*"
-                name="avatar"
-                randomizeFilename
-                storageRef={firebase.storage().ref("images")}
-                onUploadStart={this.handleUploadStart}
-                onUploadError={this.handleUploadError}
-                onUploadSuccess={this.handleUploadSuccess}
-                onProgress={this.handleProgress}
-              />
-            </form>
-          </div>
-        )
-    }
+  }
+
+    handleProgress = progress => this.setState({ progress });
+    handleUploadError = error => {
+      this.setState({ isUploading: false });
+      console.error(error);
+    };
+    handleUploadSuccess = () => {
+      alert(this.props.fileName)
+      this.setState({ progress: 100, isUploading: false });
+      firebase
+        .storage()
+        .ref()
+        .child()
+    };
+    
+    render() {
+      return (
+        <div>
+          <form>
+            {this.state.isUploading && <p>Progress: {this.state.progress}</p>}
+            <FileUpload
+              accept="mp3/*"
+              onChange={this.customOnChangeHandler}
+              ref={instance => { this.fileUploader = instance; } }
+              filename={this.state.fileName }
+              storageRef={firebase.storage().ref(`${this.props.userName}/${this.props.packName}`)}
+              onUploadError={this.handleUploadError}
+              onUploadSuccess={this.handleUploadSuccess}
+              onProgress={this.handleProgress}
+            />
+          </form>
+        </div>
+      )
+  }
 }

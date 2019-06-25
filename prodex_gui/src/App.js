@@ -91,7 +91,10 @@ class App extends React.Component {
   }
   if(this.state.loggedIn){
       return(
-        <UploadScreen logOut={()=>Auth.LogOut()}/>
+        <UploadScreen 
+        userName={this.state.email}
+        packName={'beatpack'}
+        logOut={()=>Auth.LogOut()}/>
     )
     
   }

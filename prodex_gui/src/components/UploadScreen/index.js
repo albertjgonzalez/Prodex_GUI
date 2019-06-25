@@ -11,7 +11,10 @@ export default class UploadScreen extends React.Component{
         return(
             <div id={UploadScreen}>
                 <h1>This is the upload screen</h1>
-                <FileUploader />
+                <FileUploader 
+                    userName={this.props.userName}
+                    packName={this.props.packName}
+                    />
                 <button onClick={()=>singleBeat('beat')}>Upload</button>
                 <button onClick={()=>this.props.logOut()}>logout</button>
             </div>
