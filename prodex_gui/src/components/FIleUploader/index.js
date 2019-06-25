@@ -2,6 +2,8 @@ import React from 'react';
 import './../Upload'
 import FileUpload from "react-firebase-file-uploader";
 import firebase from 'firebase';
+import UploadModal from '../UploadModal';
+
 
 export default class FileUploader extends React.Component{
   constructor(props){
@@ -43,8 +45,10 @@ export default class FileUploader extends React.Component{
     };
     
     render() {
+      
       return (
         <div>
+          <UploadModal />
           <form>
             {this.state.isUploading && <p>Progress: {this.state.progress}</p>}
             <FileUpload
