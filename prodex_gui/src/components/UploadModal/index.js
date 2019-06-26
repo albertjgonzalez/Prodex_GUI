@@ -30,10 +30,9 @@ export default function UploadModal(props) {
 
   function handleClose() {
     setOpen(false);
+    props.closeModal()
   }
   if(props.modalOpen){
-
-  
     return (
       <div 
         onChange={()=>props.updateBeatInfo(beatInfo)}
@@ -66,7 +65,7 @@ export default function UploadModal(props) {
           </DialogContent>
           <DialogActions>
             <Button onClick={handleClose} color="primary">
-              Cancel
+              Upload
             </Button>
           </DialogActions>
         </Dialog>

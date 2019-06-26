@@ -9,32 +9,42 @@ export default class FileUploader extends React.Component{
   constructor(props){
     super(props);
     this.state = {
-          file: [],
+          files: [],
           isUploading: false,
           progress: 0,
           modalOpen:false,
+          uploadReady:false,
           beatName:'',
-          beatPackName:''
+          beatPackName:'',
+          storageRef:'firebase.storage().ref(`${this.props.userName}/${this.state.beatPackName}`)'
         };
+    const fileToUpload = [];
   }
-  
-    
-    
+
     
   customOnChangeHandler = (event) => {
+    const files = event.target.files[0]
+    const filesToStore = [];
+    filesToStore.push(files)
+    this.setState({ files: filesToStore });
     this.setState({modalOpen:true})
-    // this.startUploadManually(event)
   }
  
   updateBeatData = (beatInfo) => {
-    let { beatName,beatPackName } = beatInfo;
+    let { beatName } = beatInfo;
+    let { beatPackName } = beatInfo;
     this.setState({ beatName,beatPackName })
     console.log(this.state.beatName)
   }
   
-  startUploadManually = (e) => {
+  closeModal = () =>{
+    this.setState({modalOpen:false})
+    this.setState({uploadReady:true})
+    this.startUploadManually(this.state.files)
+  }
+  startUploadManually = (beat) => {
     this.setState({ isUploading: true, progress: 0 })
-    this.fileUploader.startUpload(e.target.files[0])
+    this.fileUploader.startUpload(beat[0])
 
   }
 
@@ -44,12 +54,11 @@ export default class FileUploader extends React.Component{
       console.error(error);
     };
     handleUploadSuccess = () => {
-      alert(this.props.fileName)
       this.setState({ progress: 100, isUploading: false });
       firebase
         .storage()
         .ref()
-        .child()
+        .child(this.state.beatName)
     };
     
     render() {
@@ -57,6 +66,7 @@ export default class FileUploader extends React.Component{
       return (
         <div>
           <UploadModal 
+            closeModal={this.closeModal}
             updateBeatInfo={this.updateBeatData}
             modalOpen={this.state.modalOpen}
             beatName={this.props.beatName}
@@ -68,8 +78,8 @@ export default class FileUploader extends React.Component{
               accept="mp3/*"
               onChange={this.customOnChangeHandler}
               ref={instance => { this.fileUploader = instance; } }
-              filename={this.state.beatName }
-              storageRef={firebase.storage().ref(`${this.props.userName}/${this.props.packName}`)}
+              filename={this.state.beatName}
+              storageRef={firebase.storage().ref(`${this.props.userName}/${this.state.beatPackName}`)}
               onUploadError={this.handleUploadError}
               onUploadSuccess={this.handleUploadSuccess}
               onProgress={this.handleProgress}
