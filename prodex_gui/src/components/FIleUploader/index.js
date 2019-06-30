@@ -6,6 +6,7 @@ import firebase from 'firebase';
 import UploadModal from '../UploadModal';
 import './style.css';
 import plusSign from './../../images/plusSign.png'
+import { Button } from '@material-ui/core';
 
 
 export default class FileUploader extends React.Component{
@@ -81,9 +82,11 @@ export default class FileUploader extends React.Component{
               onProgress={this.handleProgress}
               style={{}}
             >
-              <div style={{paddingLeft:'50%'}}>
-                <text>Add Beat</text><br />
+              <div id={'ButtonContainter'} style={{width: '100%', height: '100vh', display: 'flex'}}>
+              <div id={'uploadButton'} style={{margin:'auto', justifyItems:'center'}}>
+              <text>Add Beat</text><br />
               <img src={plusSign} style={{height:`50px`,width:'50px'}}/>
+              </div>
               </div>
             </CustomUploadButton>
           <UploadModal 
