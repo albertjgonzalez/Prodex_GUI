@@ -1,8 +1,11 @@
 import React from 'react';
 import './../Upload'
 import FileUpload from "react-firebase-file-uploader";
+import CustomUploadButton from 'react-firebase-file-uploader/lib/CustomUploadButton';
 import firebase from 'firebase';
 import UploadModal from '../UploadModal';
+import './style.css';
+import plusSign from './../../images/plusSign.png'
 
 
 export default class FileUploader extends React.Component{
@@ -51,6 +54,7 @@ export default class FileUploader extends React.Component{
     handleProgress = progress => this.setState({ progress });
     handleUploadError = error => {
       this.setState({ isUploading: false });
+      this.setState({uploadReady: false})
       console.error(error);
     };
     handleUploadSuccess = () => {
@@ -64,17 +68,9 @@ export default class FileUploader extends React.Component{
     render() {
       
       return (
-        <div>
-          <UploadModal 
-            closeModal={this.closeModal}
-            updateBeatInfo={this.updateBeatData}
-            modalOpen={this.state.modalOpen}
-            beatName={this.props.beatName}
-            beatPackName={this.props.beatPackName}
-            />
-          <form>
+          <form style={{height:'100%',marginTop: '0',paddingTop:'0'}}>
             {this.state.isUploading && <p>Progress: {this.state.progress}</p>}
-            <FileUpload
+            <CustomUploadButton
               accept="mp3/*"
               onChange={this.customOnChangeHandler}
               ref={instance => { this.fileUploader = instance; } }
@@ -83,9 +79,23 @@ export default class FileUploader extends React.Component{
               onUploadError={this.handleUploadError}
               onUploadSuccess={this.handleUploadSuccess}
               onProgress={this.handleProgress}
+              style={{}}
+            >
+              <div style={{paddingLeft:'50%'}}>
+                <text>Add Beat</text><br />
+              <img src={plusSign} style={{height:`50px`,width:'50px'}}/>
+              </div>
+            </CustomUploadButton>
+          <UploadModal 
+            closeModal={this.closeModal}
+            updateBeatInfo={this.updateBeatData}
+            modalOpen={this.state.modalOpen}
+            beatName={this.props.beatName}
+            beatPackName={this.props.beatPackName}
             />
           </form>
-        </div>
+
+       
       )
   }
 }
