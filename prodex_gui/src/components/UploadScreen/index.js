@@ -1,6 +1,6 @@
 import React from 'react';
 import { singleBeat,beatPack } from '../Upload';
-import FileUploader from './../FIleUploader';
+import FileUploadComponent from '../FileUploadComponent';
 import './Style.css'
 
 export default class UploadScreen extends React.Component{
@@ -11,7 +11,7 @@ export default class UploadScreen extends React.Component{
 
         return(
             <div style={{backgroundColor: 'steelblue', height:'100vh',marginTop:'0',paddingTop:'0'}}id={UploadScreen}>
-                <FileUploader userName={this.props.userName} beatRef={this.props.beatRef}/>
+                <FileUploadComponent userName={this.props.userName} beatRef={this.props.beatRef}/>
                 {/* <button onClick={()=>this.props.logOut()}>logout</button> */}
             </div>
         )
