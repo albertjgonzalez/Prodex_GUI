@@ -4,8 +4,10 @@
   margin-top: 0;
   padding-top: 0;
   justify-content:'center';
+  background-color: steelblue;
 }
 html, body, #App, #App>div {
   height: 100%;
   margin-top: 0;
+  background-color: steelblue;
 }
