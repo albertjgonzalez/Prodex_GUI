@@ -39,11 +39,8 @@ export default function UploadModal(props) {
         beatName={beatInfo.beatName}
         beatPackName={beatInfo.beatPackName}>
         <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
-          <DialogTitle id="form-dialog-title">Subscribe</DialogTitle>
+          <DialogTitle id="form-dialog-title">Add Beat</DialogTitle>
           <DialogContent>
-            <DialogContentText>
-              Name beat and pack location
-            </DialogContentText>
             <TextField
               onChange={(event)=>updateBeatName(event)}
               autoFocus
@@ -55,7 +52,6 @@ export default function UploadModal(props) {
             />
             <TextField
               onChange={(event)=>updateBeatPackName(event)}
-              autoFocus
               margin="dense"
               id="beatPackName"
               label="beat pack name"
