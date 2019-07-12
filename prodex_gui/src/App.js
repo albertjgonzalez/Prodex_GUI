@@ -39,23 +39,24 @@ class App extends React.Component {
   }
   
 
-  addUserToDB(name,email){
-    name ? this.setState({name}) : this.setState({email})
-     FBDatabase.addUser(this.database,this.state.name,this.state.email)
+  addUserToDB(name,email,uid){
+     this.setState({name,email,uid})
+    FBDatabase.addUser(this.database,this.state.name,this.state.email,this.state.uid)
+    
   }
 
   changeLogginState(state){
    this.setState({loggedIn:state})
  } 
 
- saveUserInfo(info){
-   this.setState({email:info})
-   console.log(info)
+ saveUserInfo(email,uid){
+   this.setState({email,uid})
+   console.log(this.state.uid)
  }
   submitUser(email,password){
   Auth.LogginUser(email,password,
     (state)=>this.changeLogginState(state),
-    (info)=>this.saveUserInfo(info)
+    (email,uid)=>this.saveUserInfo(email,uid)
     )}
 
   verifyUser(email,password){
@@ -99,6 +100,7 @@ class App extends React.Component {
   }
 
  render(){
+   {console.log(this.state.uid)}
   if(this.state.creatingUser){
     return (
       <SignUpScreen 
@@ -106,7 +108,7 @@ class App extends React.Component {
           (name,email,password)=>Auth.CreateUser(name,email,password,
             (state)=>this.changeLogginState(state),
             (state)=>this.createUser(state),
-            (name,email)=>this.addUserToDB(name,email)
+            (name,email,uid)=>this.addUserToDB(name,email,uid)
             )}/>
     )
   }

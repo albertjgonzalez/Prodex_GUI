@@ -3,9 +3,8 @@ import FBDatabase from './FBDatabase';
 
  export const Auth = {
     CreateUser: (name,email,password,changeLogginState,creatingUser,addUserToDB) => {
-      console.log(email,password)
         firebase.auth().createUserWithEmailAndPassword(email, password).then(success=>{
-          addUserToDB(name,email)
+          addUserToDB(name,email,success.user.uid)
           changeLogginState(true)
           creatingUser(false)
         }).catch(function(error) {
@@ -24,8 +23,8 @@ import FBDatabase from './FBDatabase';
     LogginUser: (email,password,changeLogginState,saveUserInfo) => {
       firebase.auth().signInWithEmailAndPassword(email, password).then(success=>{
       changeLogginState(true)
-      saveUserInfo(email)
-        console.log(success)
+      saveUserInfo(email,success.user.uid)
+        console.log(success.user.uid)
       }).catch(function(error) {
         // Handle Errors here.
         console.log(email)
