@@ -15,7 +15,7 @@ class App extends React.Component {
       name:'',
       email:'',
       password:'',
-      loggedIn:true,
+      loggedIn:false,
       creatingUser: false,
       displayName: '',
       emailVerified: '',
@@ -40,8 +40,7 @@ class App extends React.Component {
   
 
   addUserToDB(name,email){
-    alert(name,email)
-    this.setState({name,email})
+    name ? this.setState({name}) : this.setState({email})
      FBDatabase.addUser(this.database,this.state.name,this.state.email)
   }
 
@@ -49,9 +48,15 @@ class App extends React.Component {
    this.setState({loggedIn:state})
  } 
 
+ saveUserInfo(info){
+   this.setState({email:info})
+   console.log(info)
+ }
   submitUser(email,password){
-  Auth.LogginUser(email,password,(state)=>this.changeLogginState(state))
-    }
+  Auth.LogginUser(email,password,
+    (state)=>this.changeLogginState(state),
+    (info)=>this.saveUserInfo(info)
+    )}
 
   verifyUser(email,password){
     console.log(email,password)

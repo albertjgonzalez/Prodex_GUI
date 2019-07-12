@@ -21,9 +21,10 @@ import FBDatabase from './FBDatabase';
             });
     },
 
-    LogginUser: (email,password,changeLogginState) => {
+    LogginUser: (email,password,changeLogginState,saveUserInfo) => {
       firebase.auth().signInWithEmailAndPassword(email, password).then(success=>{
       changeLogginState(true)
+      saveUserInfo(email)
         console.log(success)
       }).catch(function(error) {
         // Handle Errors here.
