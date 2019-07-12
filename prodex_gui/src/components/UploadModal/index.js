@@ -8,20 +8,19 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
 export default function UploadModal(props) {
-  let beatInfo ={
-    beatName: '',
-    beatPackName: ''
-  }
- 
+  
+  let  beatName= ''
+  let  beatPackName= ''
+
   const [open, setOpen] = React.useState(true);
 
   function updateBeatName(e){
-     beatInfo.beatName=e.target.value
+     beatName=e.target.value
 
   }
 
   function updateBeatPackName(e){
-    beatInfo.beatPackName=e.target.value
+    beatPackName=e.target.value
  }
 
   function handleClickOpen() {
@@ -35,9 +34,9 @@ export default function UploadModal(props) {
   if(props.modalOpen){
     return (
       <div 
-        onChange={()=>props.updateBeatInfo(beatInfo)}
-        beatName={beatInfo.beatName}
-        beatPackName={beatInfo.beatPackName}>
+        onChange={()=>props.updateBeatInfo(beatName,beatPackName)}
+        beatName={beatName}
+        beatPackName={beatPackName}>
         <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
           <DialogTitle id="form-dialog-title">Add Beat</DialogTitle>
           <DialogContent>

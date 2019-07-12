@@ -33,11 +33,8 @@ export default class FileUploadComponent extends React.Component {
     this.setState({ modalOpen: true })
   }
   
-  updateBeatData = (beatInfo) => {
-    let { beatName } = beatInfo;
-    let { beatPackName } = beatInfo;
-    this.setState({ beatName, beatPackName })
-    console.log(this.state.beatName)
+  updateBeatData = (beatName,beatPackName) => {
+    beatName ? this.setState({ beatName }) : this.setState({ beatPackName })
   }
   
   closeModal = () => {
@@ -47,7 +44,7 @@ export default class FileUploadComponent extends React.Component {
   }
   startUploadManually = (beat) => {
     this.setState({ isUploading: true, progress: 0 })
-    // this.fileUploader.startUpload(beat[0])
+     this.fileUploader.startUpload(beat[0])
     
   }
   

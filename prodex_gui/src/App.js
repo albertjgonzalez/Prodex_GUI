@@ -15,7 +15,7 @@ class App extends React.Component {
       name:'',
       email:'',
       password:'',
-      loggedIn:false,
+      loggedIn:true,
       creatingUser: false,
       displayName: '',
       emailVerified: '',
