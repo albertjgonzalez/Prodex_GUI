@@ -3,9 +3,6 @@ import Button from '@material-ui/core/Button';
 import firebase from 'firebase';
 
 export default class LogOutButton extends Component{
-    LogOut(){
-        firebase.auth().signOut()
-    }
     render(){
         return(
             <Button 
@@ -13,7 +10,7 @@ export default class LogOutButton extends Component{
                     position:'absolute',
                     top:'0'
                 }}
-                onClick={()=>this.LogOut()}>
+                onClick={this.props.onClick}>
                 sign out
             </Button>
         )

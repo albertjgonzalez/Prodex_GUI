@@ -69,7 +69,7 @@ export default class LoginScreen extends React.Component {
                     className={this.state.CRHover} 
                     onMouseEnter={()=>this.setState({CRHover:'createUserTextHover'})}
                     onMouseLeave={()=>this.setState({CRHover:'createUserText'})}>
-                <p onClick={()=>this.props.createUser()}>
+                <p onClick={()=>this.props.createUser(true)}>
                     Create Account
                 </p>
                 </div>

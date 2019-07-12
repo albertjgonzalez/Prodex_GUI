@@ -6,7 +6,7 @@ import firebase from 'firebase';
 import UploadModal from '../UploadModal';
 import './style.css';
 import plusSign from './../../images/plusSign.png'
-
+import FBDatabase from '../FBDatabase'
 
 export default class FileUploadComponent extends React.Component {
   constructor(props) {
@@ -23,8 +23,8 @@ export default class FileUploadComponent extends React.Component {
     };
     const fileToUpload = [];
   }
-
-
+  
+  
   customOnChangeHandler = (event) => {
     const files = event.target.files[0]
     const filesToStore = [];
@@ -32,14 +32,14 @@ export default class FileUploadComponent extends React.Component {
     this.setState({ files: filesToStore });
     this.setState({ modalOpen: true })
   }
-
+  
   updateBeatData = (beatInfo) => {
     let { beatName } = beatInfo;
     let { beatPackName } = beatInfo;
     this.setState({ beatName, beatPackName })
     console.log(this.state.beatName)
   }
-
+  
   closeModal = () => {
     this.setState({ modalOpen: false })
     this.setState({ uploadReady: true })
@@ -47,10 +47,10 @@ export default class FileUploadComponent extends React.Component {
   }
   startUploadManually = (beat) => {
     this.setState({ isUploading: true, progress: 0 })
-    this.fileUploader.startUpload(beat[0])
-
+    // this.fileUploader.startUpload(beat[0])
+    
   }
-
+  
   handleProgress = progress => this.setState({ progress });
   handleUploadError = error => {
     this.setState({ isUploading: false });
@@ -60,16 +60,17 @@ export default class FileUploadComponent extends React.Component {
   handleUploadSuccess = () => {
     this.setState({ progress: 100, isUploading: false });
     firebase
-      .storage()
-      .ref()
-      .child(this.state.beatName)
+    .storage()
+    .ref()
+    .child(this.state.beatName)
   };
-
+  
   render() {
-
+    
     return (
       <form style={{ height: '100%', marginTop: '0', paddingTop: '0' }}
       >
+      {/* {console.log('1:',FBDatabase.addUser(this.props.databaseRef,'me','email'))} */}
         {this.state.isUploading && <p>Progress: {this.state.progress}</p>}
         <label>
           <div id={'ButtonContainter'} style={{ width: '100%', height: '100vh', display: 'flex' }}>

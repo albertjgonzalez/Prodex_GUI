@@ -1,12 +1,10 @@
 import React from 'react';
-import firebase from 'firebase';
-
-
 
 export default class SignUpScreen extends React.Component {
     constructor(props) {
         super(props);
         this.state={
+            name:'',
             email:'',
             password:''
         }
@@ -30,13 +28,24 @@ export default class SignUpScreen extends React.Component {
     };    
     handleSubmit(event){
         event.preventDefault();
-        this.props.createUser(this.state.email,this.state.password)
+        this.props.createUser(this.state.name,this.state.email,this.state.password)
     }
 
     render(){
         return (
             <form style={this.styles.form}onSubmit={(event)=>this.handleSubmit(event)}>
                 <h1>Create Account</h1>
+                <label>
+                <text style={this.styles.label}>
+                    Name
+                    </text>
+                    <br />
+                    <input 
+                        value={this.state.name} 
+                        onChange={(event)=>this.setState({name: event.target.value})}
+                        type="text" name="name" />
+                </label>
+                <br />
                 <label>
                 <text style={this.styles.label}>
                     Email
