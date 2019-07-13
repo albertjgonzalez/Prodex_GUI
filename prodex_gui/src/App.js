@@ -5,7 +5,6 @@ import { Auth } from './components/Auth'
 import UploadScreen from './components/UploadScreen';
 import LoginScreen from './components/LoginScreen.js';
 import SignUpScreen from './components/SignUpScreen.js';
-import InitializeApp from './components/InitializeApp';
 import FBDatabase from './components/FBDatabase'
 
 class App extends React.Component {
@@ -68,6 +67,7 @@ class App extends React.Component {
   }
 
   componentWillMount() {
+      
     // firebase.auth().onAuthStateChanged(function (user) {
     //   if (user) {
     //     console.log(user)
@@ -100,7 +100,6 @@ class App extends React.Component {
   }
 
  render(){
-   {console.log(this.state.uid)}
   if(this.state.creatingUser){
     return (
       <SignUpScreen 
@@ -113,6 +112,9 @@ class App extends React.Component {
     )
   }
   if(this.state.loggedIn){
+    FBDatabase.getUser(this.database,this.state.uid,(userInfo)=>{
+      this.set({name:userInfo})
+    })
       return(
         <UploadScreen 
         databaseRef={this.state.databaseRef}

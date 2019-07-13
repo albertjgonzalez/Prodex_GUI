@@ -11,12 +11,12 @@ const FBDatabase = {
         });
       },
 
-    getUser: (database,email) => {
-//       var userId = firebase.auth().currentUser.uid;
-// return database().ref('/users/' + userId).once('value').then(function(snapshot) {
-//   var username = (snapshot.val() && snapshot.val().username) || 'Anonymous';
-//   // ...
-// });
+    getUser: (database,uid,updateUserInfo) => {
+      console.log(uid)
+      database.ref("users/"+uid).child('name').once("value")
+        .then(function(snapshot) {
+          updateUserInfo(snapshot.val())
+});
     },
 
     addBeat: (database,name,beatName,beatPackName) => {

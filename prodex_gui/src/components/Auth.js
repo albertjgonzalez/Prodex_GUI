@@ -24,10 +24,8 @@ import FBDatabase from './FBDatabase';
       firebase.auth().signInWithEmailAndPassword(email, password).then(success=>{
       changeLogginState(true)
       saveUserInfo(email,success.user.uid)
-        console.log(success.user.uid)
       }).catch(function(error) {
         // Handle Errors here.
-        console.log(email)
         alert(error.message)
         // var errorCode = error.code;
         // var errorMessage = error.message;
