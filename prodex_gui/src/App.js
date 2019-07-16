@@ -12,7 +12,7 @@ class App extends React.Component {
     super(props)
     this.state={
       name:'',
-      email:'',
+      email:'email@email.com',
       password:'',
       loggedIn:false,
       creatingUser: false,
@@ -20,7 +20,7 @@ class App extends React.Component {
       emailVerified: '',
       photoURL: '',
       isAnonymous: '',
-      uid: '',
+      uid: 'WZmwvhgTTbPbM8gjB6s3vdT8vsi2',
       providerData: ''
     }
     var firebaseConfig = {
@@ -41,7 +41,10 @@ class App extends React.Component {
   addUserToDB(name,email,uid){
      this.setState({name,email,uid})
     FBDatabase.addUser(this.database,this.state.name,this.state.email,this.state.uid)
-    
+  }
+
+  sendBeatToDB(beatInfo){
+    FBDatabase.addBeat(this.database,this.state.uid,beatInfo)
   }
 
   changeLogginState(state){
@@ -50,7 +53,6 @@ class App extends React.Component {
 
  saveUserInfo(email,uid){
    this.setState({email,uid})
-   console.log(this.state.uid)
  }
   submitUser(email,password){
   Auth.LogginUser(email,password,
@@ -67,7 +69,6 @@ class App extends React.Component {
   }
 
   componentWillMount() {
-      
     // firebase.auth().onAuthStateChanged(function (user) {
     //   if (user) {
     //     console.log(user)
@@ -113,13 +114,13 @@ class App extends React.Component {
   }
   if(this.state.loggedIn){
     FBDatabase.getUser(this.database,this.state.uid,(userInfo)=>{
-      this.set({name:userInfo})
+      this.setState({name:userInfo})
     })
       return(
         <UploadScreen 
+        sendBeatToDB={(beatInfo)=>this.sendBeatToDB(beatInfo)}
         databaseRef={this.state.databaseRef}
-        userName={this.state.email}
-        packName={'beatpack'}
+        uid={this.state.uid}
         logOut={()=>Auth.LogOut((state)=>this.changeLogginState(state))}/>
     )
     

@@ -12,6 +12,7 @@ export default class FileUploadComponent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      uid:this.props.uid,
       files: [],
       isUploading: false,
       progress: 0,
@@ -19,7 +20,7 @@ export default class FileUploadComponent extends React.Component {
       uploadReady: false,
       beatName: '',
       beatPackName: '',
-      storageRef: 'firebase.storage().ref(`${this.props.userName}/${this.state.beatPackName}`)'
+      storageRef: this.props.databaseRef
     };
     const fileToUpload = [];
   }
@@ -60,14 +61,17 @@ export default class FileUploadComponent extends React.Component {
     .storage()
     .ref()
     .child(this.state.beatName)
+    // let beatInfo=[this.state.beatName,this.state.beatPackName]
+    //      alert('yurrrr')
+    //      this.props.sendBeatToDB(beatInfo)
+    let beatInfo=[this.state.beatName,this.state.beatPackName]
+    this.props.sendBeatToDB(beatInfo)
   };
-  
   render() {
-    
     return (
-      <form style={{ height: '100%', marginTop: '0', paddingTop: '0' }}
+      <form 
+      style={{ height: '100%', marginTop: '0', paddingTop: '0' }}
       >
-      {/* {console.log('1:',FBDatabase.addUser(this.props.databaseRef,'me','email'))} */}
         {this.state.isUploading && <p>Progress: {this.state.progress}</p>}
         <label>
           <div id={'ButtonContainter'} style={{ width: '100%', height: '100vh', display: 'flex' }}>

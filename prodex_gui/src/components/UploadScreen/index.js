@@ -8,18 +8,21 @@ export default class UploadScreen extends React.Component{
     constructor(props){
         super(props)
         this.state={
+            uid:'',
             databaseRef:this.props.databaseRef
         }
+    }
+    sendBeatToDB(beatInfo){
+        this.props.sendBeatToDB(beatInfo)
     }
     logOut(){
 
         this.props.logOut()
     }
     render(){
-
         return(
             <div logOut={this.props.logOut} style={{backgroundColor: 'steelblue', height:'100vh',marginTop:'0',paddingTop:'0'}}>
-                <FileUploadComponent databaseRef={this.state.databaseRef}userName={this.props.userName} beatRef={this.props.beatRef}/>
+                <FileUploadComponent sendBeatToDB={(beatInfo)=>this.sendBeatToDB(beatInfo)} databaseRef={this.state.databaseRef} uid={this.state.uid} beatRef={this.props.beatRef}/>
                 <LogOutButton onClick={()=>this.logOut()}/>
             </div>
         )
